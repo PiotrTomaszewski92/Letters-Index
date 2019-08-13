@@ -48,4 +48,34 @@ public class AlgorithmTest {
         assertEquals(mappedWords,algorithm.getMappedWords("ala ma kota, kot koduje w Javie kota"));
 
     }
+
+    @Test(expected = NullPointerException.class)
+    public void getMappedWordsWhenTextIsNull(){
+        algorithm.getMappedWords(null);
+    }
+
+    @Test
+    public void getMappedWordsWhenTextIsEmpty(){
+        assertEquals(new TreeMap<>(),algorithm.getMappedWords(""));
+    }
+
+    @Test
+    public void getMappedWordsWhenTextIsNumbers(){
+        assertEquals(new TreeMap<>(),algorithm.getMappedWords("123"));
+    }
+
+    @Test
+    public void getMappedWordsWhenTextIsNumbersAndWords(){
+        Map<Character,Set<String>> mappedWords = new TreeMap<>();
+        mappedWords.put('a', new TreeSet<>(Arrays.asList("ala","ma")));
+        mappedWords.put('k',new TreeSet<>(Arrays.asList("koty")));
+        mappedWords.put('l',new TreeSet<>(Arrays.asList("ala")));
+        mappedWords.put('m',new TreeSet<>(Arrays.asList("m","ma")));
+        mappedWords.put('o',new TreeSet<>(Arrays.asList("koty")));
+        mappedWords.put('t',new TreeSet<>(Arrays.asList("koty")));
+        mappedWords.put('w',new TreeSet<>(Arrays.asList("w")));
+        mappedWords.put('y',new TreeSet<>(Arrays.asList("koty")));
+
+        assertEquals(mappedWords,algorithm.getMappedWords("1 ala ma 2 koty w 10m2"));
+    }
 }
